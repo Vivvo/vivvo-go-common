@@ -1,4 +1,4 @@
-module github.com/vivvo/vivvo-go-common
+module github.com/Vivvo/vivvo-go-common
 
 go 1.14
 
