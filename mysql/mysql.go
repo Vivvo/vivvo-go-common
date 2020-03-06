@@ -13,14 +13,14 @@ import (
 )
 
 // InitDB loads the config from environment variables and establishes a conenction to the database
-func InitDB() (*sql.DB, error) {
+func InitDB(db string) (*sql.DB, error) {
 	mysqlDsn := os.Getenv("DATABASE")
 	{
 		dbUser := os.Getenv("MYSQL_USER")
 		dbPass := os.Getenv("MYSQL_PASS")
 		dbHost := os.Getenv("MYSQL_HOST")
 		if dbUser != "" && dbPass != "" && dbHost != "" {
-			mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)/audit?parseTime=true", dbUser, dbPass, dbHost)
+			mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true", dbUser, dbPass, dbHost, db)
 		}
 	}
 
