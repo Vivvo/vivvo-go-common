@@ -12,7 +12,7 @@ import (
 	"github.com/pressly/goose"
 )
 
-// InitDB loads the config from environment variables and establishes a conenction to the database
+// InitDB loads the config from environment variables and establishes a connection to the database
 func InitDB(schema string) (*sql.DB, error) {
 	mysqlDsn := os.Getenv("DATABASE")
 	{
@@ -53,10 +53,12 @@ func InitDB(schema string) (*sql.DB, error) {
 	// https://stackoverflow.com/questions/39980902/golang-mysql-error-packets-go33-unexpected-eof
 	db.SetMaxIdleConns(0)
 
-	err = DoMigrations("./migrations", db)
-	if err != nil {
-		// logger.Fatalf("Failed to run migrations: %s", err.Error())
-		return nil, err
+	if _, err := os.Stat("./migrations"); err == nil {
+		err = DoMigrations("./migrations", db)
+		if err != nil {
+			// logger.Fatalf("Failed to run migrations: %s", err.Error())
+			return nil, err
+		}
 	}
 
 	return db, nil
