@@ -14,14 +14,31 @@ import (
 
 // InitDB loads the config from environment variables and establishes a connection to the database
 func InitDB(schema string) (*sql.DB, error) {
-	mysqlDsn := os.Getenv("DATABASE")
-	{
-		dbUser := os.Getenv("MYSQL_USER")
-		dbPass := os.Getenv("MYSQL_PASS")
-		dbHost := os.Getenv("MYSQL_HOST")
-		if dbUser != "" && dbPass != "" && dbHost != "" {
-			mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true", dbUser, dbPass, dbHost, schema)
+	db, err := InitDBWithoutMigrations(schema)
+	if err != nil {
+		return nil, err
+	}
+
+	if _, err := os.Stat("./migrations"); err == nil {
+		err = DoMigrations("./migrations", db)
+		if err != nil {
+			// logger.Fatalf("Failed to run migrations: %s", err.Error())
+			return nil, err
 		}
+	}
+
+	return db, nil
+}
+
+// InitDBWithoutMigrations if you you need to talk to a schema not owned by the service
+// you shouldn't do this unless you need to, but you shouldn't need to
+func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
+	mysqlDsn := os.Getenv("DATABASE")
+	dbUser := os.Getenv("MYSQL_USER")
+	dbPass := os.Getenv("MYSQL_PASS")
+	dbHost := os.Getenv("MYSQL_HOST")
+	if dbUser != "" && dbPass != "" && dbHost != "" {
+		mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true", dbUser, dbPass, dbHost, schema)
 	}
 
 	if mysqlDsn == "" {
@@ -52,14 +69,6 @@ func InitDB(schema string) (*sql.DB, error) {
 
 	// https://stackoverflow.com/questions/39980902/golang-mysql-error-packets-go33-unexpected-eof
 	db.SetMaxIdleConns(0)
-
-	if _, err := os.Stat("./migrations"); err == nil {
-		err = DoMigrations("./migrations", db)
-		if err != nil {
-			// logger.Fatalf("Failed to run migrations: %s", err.Error())
-			return nil, err
-		}
-	}
 
 	return db, nil
 }
