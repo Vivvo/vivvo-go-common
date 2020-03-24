@@ -6,15 +6,15 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"os"
-
 	"github.com/go-sql-driver/mysql"
 	"github.com/pressly/goose"
+	"os"
+	"strings"
 )
 
 // InitDB loads the config from environment variables and establishes a connection to the database
-func InitDB(schema string) (*sql.DB, error) {
-	db, err := InitDBWithoutMigrations(schema)
+func InitDB(schema string, flags ...string) (*sql.DB, error) {
+	db, err := InitDBWithoutMigrations(schema, flags)
 	if err != nil {
 		return nil, err
 	}
@@ -32,13 +32,16 @@ func InitDB(schema string) (*sql.DB, error) {
 
 // InitDBWithoutMigrations if you you need to talk to a schema not owned by the service
 // you shouldn't do this unless you need to, but you shouldn't need to
-func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
+func InitDBWithoutMigrations(schema string, flags []string) (*sql.DB, error) {
 	mysqlDsn := os.Getenv("DATABASE")
 	dbUser := os.Getenv("MYSQL_USER")
 	dbPass := os.Getenv("MYSQL_PASS")
 	dbHost := os.Getenv("MYSQL_HOST")
 	if dbUser != "" && dbPass != "" && dbHost != "" {
-		mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)/%s?parseTime=true", dbUser, dbPass, dbHost, schema)
+		mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)/%s", dbUser, dbPass, dbHost, schema)
+		if len(flags) > 0 {
+			mysqlDsn = fmt.Sprintf("%s?%s", mysqlDsn, strings.Join(flags[:], "&"))
+		}
 	}
 
 	if mysqlDsn == "" {
