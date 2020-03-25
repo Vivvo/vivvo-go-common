@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.9...v0.1.10) (2020-03-25)
+
+
+### Bug Fixes
+
+* use variadic param instead of array ([34517e0](https://github.com/Vivvo/vivvo-go-common/commit/34517e06ed472894769e4b361cda1c334f42540d))
+
 ### [0.1.9](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.8...v0.1.9) (2020-03-24)
 
 ### [0.1.8](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.7...v0.1.8) (2020-03-24)
