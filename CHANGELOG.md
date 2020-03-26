@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.11](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.10...v0.1.11) (2020-03-26)
+
+
+### Bug Fixes
+
+* just use a env flag ([f5c89d3](https://github.com/Vivvo/vivvo-go-common/commit/f5c89d31adb3ed8e06cff71e5c2f675890921605))
+
 ### [0.1.10](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.9...v0.1.10) (2020-03-25)
 
 
