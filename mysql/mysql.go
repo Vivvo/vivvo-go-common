@@ -9,6 +9,7 @@ import (
 	"github.com/go-sql-driver/mysql"
 	"github.com/pressly/goose"
 	"os"
+	"time"
 )
 
 // InitDB loads the config from environment variables and establishes a connection to the database
@@ -69,8 +70,8 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 		return nil, err
 	}
 
-	// https://stackoverflow.com/questions/39980902/golang-mysql-error-packets-go33-unexpected-eof
-	db.SetMaxIdleConns(0)
+	db.SetMaxIdleConns(5)
+	db.SetConnMaxLifetime(2*time.Minute)
 
 	return db, nil
 }
