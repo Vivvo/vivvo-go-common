@@ -1,6 +1,6 @@
 {
   "name": "vivvo-go-common",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "common functions for internal use",
   "main": "index.js",
   "scripts": {
