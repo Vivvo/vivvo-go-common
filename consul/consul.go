@@ -5,7 +5,7 @@ import (
 	"github.com/hashicorp/consul/api"
 )
 
-func getClient() (*api.Client, error) {
+func GetClient() (*api.Client, error) {
 	consulInsecure := os.Getenv("CONSUL_INSECURE")
 	consulHost := "consul.sd.svc.cluster.local"
 	consulHostEnv := os.Getenv("CONSUL_HOST")
