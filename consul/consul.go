@@ -7,7 +7,7 @@ import (
 
 func GetClient(address ...string) (*api.Client, error) {
 	consulInsecure := os.Getenv("CONSUL_INSECURE")
-	consulHost := "consul.server.consul"
+	consulHost := "consul.service.consul"
 	consulHostEnv := os.Getenv("CONSUL_HOST")
 
 	if consulHostEnv != "" {
@@ -26,6 +26,6 @@ func GetClient(address ...string) (*api.Client, error) {
 		consulConfig = api.Config{
 			Address: "http://" + consulHost + ":8500",
 		}
-	}
+	}s
 	return api.NewClient(&consulConfig)
 }
