@@ -26,6 +26,6 @@ func GetClient(address ...string) (*api.Client, error) {
 		consulConfig = api.Config{
 			Address: "http://" + consulHost + ":8500",
 		}
-	}s
+	}
 	return api.NewClient(&consulConfig)
 }
