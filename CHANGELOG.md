@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.18](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.16...v0.1.18) (2020-09-03)
+
+
+### Features
+
+* add address support ([242501f](https://github.com/Vivvo/vivvo-go-common/commit/242501fb57a68a3022518a981113d62a27200d03))
+
 ### [0.1.17](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.16...v0.1.17) (2020-09-03)
 
 ### [0.1.14](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.13...v0.1.14) (2020-06-17)
