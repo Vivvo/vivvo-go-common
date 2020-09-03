@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.20](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.19...v0.1.20) (2020-09-03)
+
+
+### Bug Fixes
+
+* consul host ([f524ef6](https://github.com/Vivvo/vivvo-go-common/commit/f524ef6b3ed15963ab24f424136134eed13d953d))
+
 ### [0.1.19](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.18...v0.1.19) (2020-09-03)
 
 
