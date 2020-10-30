@@ -6,10 +6,11 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"github.com/go-sql-driver/mysql"
-	"github.com/pressly/goose"
 	"os"
 	"time"
+
+	"github.com/go-sql-driver/mysql"
+	"github.com/pressly/goose"
 )
 
 // InitDB loads the config from environment variables and establishes a connection to the database
@@ -38,8 +39,8 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 	dbPass := os.Getenv("MYSQL_PASS")
 	dbHost := os.Getenv("MYSQL_HOST")
 	if dbUser != "" && dbPass != "" && dbHost != "" {
-		mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)/%s", dbUser, dbPass, dbHost, schema)
-		if os.Getenv("MYSQL_FLAGS") != ""  {
+		mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)", dbUser, dbPass, dbHost)
+		if os.Getenv("MYSQL_FLAGS") != "" {
 			mysqlDsn = fmt.Sprintf("%s?%s", mysqlDsn, os.Getenv("MYSQL_FLAGS"))
 		}
 	}
@@ -59,10 +60,22 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 		}
 	}
 
-	db, err := sql.Open("mysql", mysqlDsn)
+	db, err := sql.Open("mysql", fmt.Sprintf("%s/%s", mysqlDsn, schema))
 	if err != nil {
-		// log.Fatalf("Failed to connect to database: %s", err.Error())
-		return nil, err
+		fmt.Printf("Failed to connect to schema, attempting to create it")
+		db, err = sql.Open("mysql", mysqlDsn)
+		if err != nil {
+			return nil, err
+		}
+		_, err := db.Exec(fmt.Sprintf("create database if not exists %s", schema))
+		if err != nil {
+			return nil, err
+		}
+		db.Close()
+		db, err = sql.Open("mysql", fmt.Sprintf("%s/%s", mysqlDsn, schema))
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	if err = db.Ping(); err != nil {
@@ -71,7 +84,7 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 	}
 
 	db.SetMaxIdleConns(5)
-	db.SetConnMaxLifetime(2*time.Minute)
+	db.SetConnMaxLifetime(2 * time.Minute)
 
 	return db, nil
 }
