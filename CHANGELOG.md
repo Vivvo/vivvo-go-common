@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.24](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.22...v0.1.24) (2020-11-13)
+
 ### [0.1.23](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.22...v0.1.23) (2020-11-13)
 
 ### [0.1.20](https://github.com/Vivvo/vivvo-go-common/compare/v0.1.19...v0.1.20) (2020-09-03)
