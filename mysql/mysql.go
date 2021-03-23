@@ -45,7 +45,7 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 		flags := os.Getenv("MYSQL_FLAGS")
 		if flags != "" {
 			mysqlDsn = fmt.Sprintf("%s?%s", mysqlDsn, flags)
-			mysqlDsnSchema = fmt.Sprintf("%s?s%s", mysqlDsnSchema, flags)
+			mysqlDsnSchema = fmt.Sprintf("%s?%s", mysqlDsnSchema, flags)
 		}
 	}
 
