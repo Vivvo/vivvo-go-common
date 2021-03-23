@@ -35,13 +35,17 @@ func InitDB(schema string) (*sql.DB, error) {
 // you shouldn't do this unless you need to, but you shouldn't need to
 func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 	mysqlDsn := os.Getenv("DATABASE")
+	mysqlDsnSchema := fmt.Sprintf("%s%s", os.Getenv("DATABASE"), schema)
 	dbUser := os.Getenv("MYSQL_USER")
 	dbPass := os.Getenv("MYSQL_PASS")
 	dbHost := os.Getenv("MYSQL_HOST")
 	if dbUser != "" && dbPass != "" && dbHost != "" {
 		mysqlDsn = fmt.Sprintf("%s:%s@tcp(%s)/", dbUser, dbPass, dbHost)
-		if os.Getenv("MYSQL_FLAGS") != "" {
-			mysqlDsn = fmt.Sprintf("%s?%s", mysqlDsn, os.Getenv("MYSQL_FLAGS"))
+		mysqlDsnSchema = fmt.Sprintf("%s%s", mysqlDsn, schema)
+		flags := os.Getenv("MYSQL_FLAGS")
+		if flags != "" {
+			mysqlDsn = fmt.Sprintf("%s?%s", mysqlDsn, flags)
+			mysqlDsnSchema = fmt.Sprintf("%s?s%s", mysqlDsnSchema, flags)
 		}
 	}
 
@@ -60,7 +64,7 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 		}
 	}
 
-	db, err := sql.Open("mysql", fmt.Sprintf("%s%s", mysqlDsn, schema))
+	db, err := sql.Open("mysql", mysqlDsnSchema)
 	if err != nil {
 		fmt.Printf("Failed to connect to schema, attempting to create it")
 		db, err = sql.Open("mysql", mysqlDsn)
@@ -72,7 +76,7 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 			return nil, err
 		}
 		db.Close()
-		db, err = sql.Open("mysql", fmt.Sprintf("%s%s", mysqlDsn, schema))
+		db, err = sql.Open("mysql", mysqlDsnSchema)
 		if err != nil {
 			return nil, err
 		}
