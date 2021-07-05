@@ -64,8 +64,8 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 		}
 	}
 
-	db, err := sql.Open("mysql", mysqlDsnSchema)
-	if err != nil {
+	db, _ := sql.Open("mysql", mysqlDsnSchema)
+	if err := db.Ping(); err != nil {
 		fmt.Printf("Failed to connect to schema, attempting to create it")
 		db, err = sql.Open("mysql", mysqlDsn)
 		if err != nil {
@@ -82,7 +82,7 @@ func InitDBWithoutMigrations(schema string) (*sql.DB, error) {
 		}
 	}
 
-	if err = db.Ping(); err != nil {
+	if err := db.Ping(); err != nil {
 		// log.Fatalf("Failed to ping database: %s", err.Error())
 		return nil, err
 	}
