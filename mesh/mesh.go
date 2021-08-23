@@ -1,6 +1,8 @@
 package mesh
 
-func internal(path string) string {
+import "os"
+
+func Internal(path string) string {
 	if os.Getenv("USE_HTTPS") == "true" {
 		return "https://" + path
 	} else {
