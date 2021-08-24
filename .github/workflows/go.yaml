@@ -26,6 +26,5 @@ jobs:
         with:
           golangci_lint_flags: '--config=.github/golangci.yaml'
           tool_name: "golangci-lint-github-check"
-          level: warning
           reporter: "github-check"
         
