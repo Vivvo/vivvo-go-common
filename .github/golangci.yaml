@@ -29,9 +29,5 @@ linters:
     - unconvert
     - unparam
     - wastedassign
-    - whitespace
-
-issues:
-  exclude-use-default: false
-  max-same-issues: 0
+    - whitespaces
   
