@@ -1,0 +1,37 @@
+linters:
+  disable-all: true
+  enable:
+    - deadcode
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unused
+    - varcheck
+    - bodyclose
+    - cyclop
+    - dupl
+    - durationcheck
+    - exhaustive
+    - exportloopref
+    - goconst
+    - gocritic
+    - gofmt
+    - gomnd
+    - gosec
+    - ifshort
+    - makezero
+    - misspell
+    - prealloc
+    - unconvert
+    - unparam
+    - wastedassign
+    - whitespace
+
+issues:
+  exclude-use-default: false
+  max-same-issues: 0
+  
