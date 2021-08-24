@@ -29,5 +29,5 @@ linters:
     - unconvert
     - unparam
     - wastedassign
-    - whitespaces
+    - whitespace
   
