@@ -6,8 +6,8 @@ import (
 )
 
 func Internal(path string) string {
-	if strings.HasPrefix("http") {
-		if strings.HasPrefix("https") {
+	if strings.HasPrefix(path, "http") {
+		if strings.HasPrefix(path, "https") {
 			path = strings.TrimPrefix(path, "https://")
 		} else {
 			path = strings.TrimPrefix(path, "http://")
