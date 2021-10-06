@@ -1,6 +1,9 @@
 package mesh
 
-import "os"
+import (
+	"os"
+	"strings"
+)
 
 func Internal(path string) string {
 	if strings.HasPrefix("http") {
